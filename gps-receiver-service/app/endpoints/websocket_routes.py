@@ -28,7 +28,7 @@ async def vehicle_location_websocket(websocket: WebSocket):
             
             # Publish to Kafka
             location_dict = location.dict()
-            if kafka_producer.publish_gps_data(location_dict):
+            if await kafka_producer.publish_gps_data(location_dict):
                 print(f"📤 Published to Kafka topic 'gps-topic': {location.vehicleId}")
                 await websocket.send_text("200 OK: Data received, validated and published to Kafka")
             else:
