@@ -71,5 +71,17 @@ services:
       - kafka
       - kafka-init
 
+  gps-consumer-service:
+    build:
+      context: ./gps-consumer-service
+    environment:
+      KAFKA_BROKER: kafka:9092
+      DATABASE_URL: postgres://postgres:password@postgres:5432/gpsdb?sslmode=disable
+    depends_on:
+      - kafka
+      - kafka-init
+      - postgres
+    restart: unless-stopped
+
 volumes:
   postgres_data:
